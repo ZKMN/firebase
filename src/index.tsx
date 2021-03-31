@@ -17,6 +17,7 @@ declare global {
     recaptchaVerifier: any;
     confirmationResult: any;
     recaptchaWidgetId: any;
+    userName: string;
   }
 }
 

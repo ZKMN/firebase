@@ -8,10 +8,6 @@ const formItemLayout = {
     xs: { span: 24 },
     sm: { span: 24 },
   },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 24 },
-  },
 };
 
 interface ILogin {
@@ -28,20 +24,18 @@ export const RegisterForm = ({
 }: ILogin) => {
   const [register] = Form.useForm();
     
-  const handleSendPhoneNumber = (values: { prefix: string, phone: string }) => {
+  const handleSendPhoneNumber = async (values: { prefix: string, phone: string, displayName: string }) => {
     const appVerifier = window.recaptchaVerifier;
     onCapchaLoading(true);
-    
-    firebase.auth().signInWithPhoneNumber(`+${values.prefix}${values.phone}`, appVerifier)
-      .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult;
 
-      }).catch((error) => {
-        grecaptcha.reset(window.recaptchaWidgetId);
-        showError(error);
-      });
+    try {
+      const confirmationResult = await firebase.auth().signInWithPhoneNumber(`+${values.prefix}${values.phone}`, appVerifier);
+      window.confirmationResult = confirmationResult;
+      window.userName = values.displayName;
+    } catch (error) {
+      grecaptcha.reset(window.recaptchaWidgetId);
+      showError(error);
+    }
   };
 
   const prefixSelector = (
@@ -61,13 +55,26 @@ export const RegisterForm = ({
         {...formItemLayout}
         form={register}
         name="register"
+        labelAlign="left"
         onFinish={handleSendPhoneNumber}
         initialValues={{ prefix: '1' }}
         scrollToFirstError
       >
         <Form.Item
+          name="displayName"
+          label="Full name"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your full name!',
+            },
+          ]}
+        >
+          <Input style={{ width: '100%' }} />
+        </Form.Item>
+        <Form.Item
           name="phone"
-          label="Phone Number"
+          label="Mobile phone"
           rules={[
             {
               required: true,

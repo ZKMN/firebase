@@ -42,27 +42,20 @@ export const Login = ({
     });
   }, []);
 
-  // Listen to the Firebase Auth state and set the local state.
-  useEffect(() => {
-    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(userAuth => {
-      if(userAuth) {
-        loginSuccess(userAuth);
-      }
-    });
-
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-  }, []);
-
-  const logout = () => {
-    logoutAction();
-    firebase.auth().signOut();
+  const logout = async () => {
+    try {
+      await firebase.auth().signOut();
+      logoutAction();
+    } catch (error) {
+      showError(error);
+    }
   };
 
   if(user) {
     return (
       <div>
         <h1>My App</h1>
-        <p>Welcome {user.displayName}! You are now signed-in!</p>
+        <p>Welcome {window.userName || user.displayName}! You are now signed-in!</p>
         <a onClick={logout}>Sign-out</a>
       </div>
     );

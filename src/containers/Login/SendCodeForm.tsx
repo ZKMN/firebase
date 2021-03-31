@@ -6,10 +6,6 @@ const formItemLayout = {
     xs: { span: 24 },
     sm: { span: 24 },
   },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 24 },
-  },
 };
 
 interface ISendCodeForm {
@@ -28,15 +24,15 @@ export const SendCodeForm = ({
 }: ISendCodeForm) => {
   const [code] = Form.useForm();
 
-  const handleSendCode = (values: { codeNum: string }) => {
-    window.confirmationResult.confirm(values.codeNum).then((result: any) => {
-      // User signed in successfully.
+  const handleSendCode = async (values: { codeNum: string }) => {
+    try {
+      const result = await window.confirmationResult.confirm(values.codeNum);
       loginSuccess(result.user);
       onCapchaLoading(false);
       onCodeSent(false);
-    }).catch((error: firebase.FirebaseError) => {
+    } catch (error) {
       showError(error);
-    });
+    }
   };
 
   return (
@@ -44,6 +40,7 @@ export const SendCodeForm = ({
       {...formItemLayout}
       form={code}
       name="code"
+      labelAlign="left"
       onFinish={handleSendCode}
       scrollToFirstError
     >
