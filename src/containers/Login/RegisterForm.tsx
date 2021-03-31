@@ -15,12 +15,12 @@ const formItemLayout = {
 };
 
 interface ILogin {
-  setIsCodeSent: (status: boolean) => void;
+  onCodeSent: (status: boolean) => void;
   showError: (error: firebase.FirebaseError) => void;
 }
 
 export const RegisterForm = ({
-  setIsCodeSent,
+  onCodeSent,
   showError,
 }: ILogin) => {
   const [register] = Form.useForm();
@@ -33,7 +33,7 @@ export const RegisterForm = ({
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        setIsCodeSent(true);
+        onCodeSent(true);
       }).catch((error) => {
         grecaptcha.reset(window.recaptchaWidgetId);
         showError(error);

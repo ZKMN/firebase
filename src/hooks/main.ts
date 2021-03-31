@@ -2,7 +2,7 @@ import { useState } from 'react';
 import isEqual from 'lodash/isEqual';
 
 // for not re-render component if state was not changed
-export const useMemoState = <T>(defState: T) => {
+export const useMemoState = <T>(defState: T): [T, (state: T) => void] => {
   const [state, setState] = useState(defState);
 
   const smartSetState = (newState: T) => {

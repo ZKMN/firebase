@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import firebase from "firebase/app";
 
 import { loginSuccess, logoutAction, showError } from 'redux-base/actions';
 import { RootState } from 'index';
+import { useMemoState } from 'hooks';
 
 import { SendCodeForm } from './SendCodeForm';
 import { RegisterForm } from './RegisterForm';
@@ -29,7 +30,7 @@ export const Login = ({
   logoutAction,
   showError,
 }: ILogin) => {
-  const [IsCodeSent, setIsCodeSent] = useState<string | boolean>();
+  const [isCodeSent, setIsCodeSent] = useMemoState(false);
 
   useEffect(() => {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
@@ -61,7 +62,7 @@ export const Login = ({
     );
   }
 
-  if(IsCodeSent && !user) {
+  if(isCodeSent && !user) {
     return (
       <SendCodeForm
         loginSuccess={loginSuccess}
@@ -73,7 +74,7 @@ export const Login = ({
   return (
     <RegisterForm
       showError={showError}
-      setIsCodeSent={setIsCodeSent}
+      onCodeSent={setIsCodeSent}
     />
   );
 };
