@@ -8,3 +8,5 @@ export const showError = <T>(error: T) => ({
 });
 
 export const resetReducerAction = () => ({ type: RESET_REDUCER });
+
+export const logoutAction = () => ({ type: LOGOUT });
