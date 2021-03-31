@@ -6,17 +6,17 @@ import {
 } from 'react-router-dom';
 
 import ConnectedPrivateRoute from './PrivateRoute';
-import { Login } from 'containers';
+import { ConnectedLogin } from 'containers';
 import Links from 'links';
 
 export const routesConfig = {
   privateRoutes: [],
   publicRoutes: [{
     path: '/',
-    component: Login,
+    component: ConnectedLogin,
   }, {
     path: Links.Login,
-    component: Login,
+    component: ConnectedLogin,
   }],
 };
 

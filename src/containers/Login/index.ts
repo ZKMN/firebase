@@ -1,1 +1,1 @@
-export * from './Login';
+export { default as ConnectedLogin } from './Login';

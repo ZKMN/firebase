@@ -1,6 +1,6 @@
 import produce from "immer";
 import {
-  LOGIN,
+  LOGIN_SUCCESS,
 
   SHOW_ERROR,
   RESET_REDUCER,
@@ -16,13 +16,10 @@ const INITIAL_STATE = {
 const login = produce(
   (draft, action: IAppAction) => {
     switch (action.type) {
-      case LOGIN.REQUEST:
-        draft.isLoading = true;
-        break;
-      case LOGIN.SUCCESS:
+      case LOGIN_SUCCESS:
         draft.isLoading = false;
         draft.isLoggedIn = true;
-        draft.user = action.data.user;
+        draft.user = action.data;
         break;
       case SHOW_ERROR:
         draft.isLoading = false;
