@@ -15,25 +15,29 @@ const formItemLayout = {
 };
 
 interface ILogin {
-  onCodeSent: (status: boolean) => void;
+  onCapchaLoading: (status: boolean) => void;
   showError: (error: firebase.FirebaseError) => void;
+  isCaptchaLoading: boolean;
 }
 
 export const RegisterForm = ({
-  onCodeSent,
+  onCapchaLoading,
   showError,
+
+  isCaptchaLoading,
 }: ILogin) => {
   const [register] = Form.useForm();
     
   const handleSendPhoneNumber = (values: { prefix: string, phone: string }) => {
     const appVerifier = window.recaptchaVerifier;
-
+    onCapchaLoading(true);
+    
     firebase.auth().signInWithPhoneNumber(`+${values.prefix}${values.phone}`, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
         window.confirmationResult = confirmationResult;
-        onCodeSent(true);
+
       }).catch((error) => {
         grecaptcha.reset(window.recaptchaWidgetId);
         showError(error);
@@ -83,6 +87,7 @@ export const RegisterForm = ({
             type="primary"
             htmlType="submit"
             style={{ width: '100%' }}
+            loading={isCaptchaLoading}
           >
             Register
           </Button>

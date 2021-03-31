@@ -12,21 +12,28 @@ const formItemLayout = {
   },
 };
 
-interface ILogin {
+interface ISendCodeForm {
   loginSuccess: (user: firebase.User | null) => void;
   showError: (error: firebase.FirebaseError) => void;
+  onCapchaLoading: (status: boolean) => void;
+  onCodeSent: (status: boolean) => void;
 }
 
 export const SendCodeForm = ({
   loginSuccess,
   showError,
-}: ILogin) => {
+
+  onCapchaLoading,
+  onCodeSent,
+}: ISendCodeForm) => {
   const [code] = Form.useForm();
 
   const handleSendCode = (values: { codeNum: string }) => {
     window.confirmationResult.confirm(values.codeNum).then((result: any) => {
       // User signed in successfully.
       loginSuccess(result.user);
+      onCapchaLoading(false);
+      onCodeSent(false);
     }).catch((error: firebase.FirebaseError) => {
       showError(error);
     });

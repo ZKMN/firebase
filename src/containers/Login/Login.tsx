@@ -31,9 +31,15 @@ export const Login = ({
   showError,
 }: ILogin) => {
   const [isCodeSent, setIsCodeSent] = useMemoState(false);
+  const [isCaptchaLoading, setIsCaptchaLoading] = useMemoState(false);
 
   useEffect(() => {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+      size: 'invisible',
+      callback: () => {
+        setIsCodeSent(true);
+      },
+    });
   }, []);
 
   // Listen to the Firebase Auth state and set the local state.
@@ -67,6 +73,8 @@ export const Login = ({
       <SendCodeForm
         loginSuccess={loginSuccess}
         showError={showError}
+        onCapchaLoading={setIsCaptchaLoading}
+        onCodeSent={setIsCodeSent}
       />
     );
   }
@@ -74,7 +82,8 @@ export const Login = ({
   return (
     <RegisterForm
       showError={showError}
-      onCodeSent={setIsCodeSent}
+      isCaptchaLoading={isCaptchaLoading}
+      onCapchaLoading={setIsCaptchaLoading}
     />
   );
 };
