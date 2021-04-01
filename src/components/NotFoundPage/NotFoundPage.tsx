@@ -5,7 +5,7 @@ export const NotFoundPage = () => (
       minHeight: "100vh",
       alignItems: "center",
       justifyContent: "center",
-      color: "#ffffff",
+      color: "#000000",
       fontSize: "3rem",
       fontWeight: "bold",
     }}

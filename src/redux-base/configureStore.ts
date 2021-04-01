@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
-import { routerMiddleware } from "react-router-redux";
-import { BrowserHistory } from "history";
+import { routerMiddleware } from 'connected-react-router';
+import { History } from "history";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 
 import { LOGOUT } from './actions';
 import rootSaga from "./sagas/rootSaga";
 import rootReducer from "./reducers/rootReducer";
 
-export const configureStore = (history: BrowserHistory) => {
+export const configureStore = (history: History) => {
   const sagaMiddleware = createSagaMiddleware();
   const reduxRouterMiddleware = routerMiddleware(history);
 

@@ -6,17 +6,29 @@ import {
 } from 'react-router-dom';
 
 import ConnectedPrivateRoute from './PrivateRoute';
-import { ConnectedLogin } from 'containers';
+import {
+  // public
+  ConnectedSignIn,
+  ConnectedSignUp,
+  // privat
+  ConnectedHome,
+} from 'containers';
 import Links from 'links';
 
 export const routesConfig = {
-  privateRoutes: [],
+  privateRoutes: [{
+    path: Links.Home,
+    component: ConnectedHome,
+  }],
   publicRoutes: [{
     path: '/',
-    component: ConnectedLogin,
+    component: () => <div>Start</div>,
+  }, {
+    path: Links.SignUp,
+    component: ConnectedSignUp,
   }, {
     path: Links.Login,
-    component: ConnectedLogin,
+    component: ConnectedSignIn,
   }],
 };
 

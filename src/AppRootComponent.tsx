@@ -1,13 +1,13 @@
 import { Route } from 'react-router';
 import { Provider } from 'react-redux';
-import { BrowserHistory } from "history";
+import { History } from "history";
 import { ConnectedRouter } from 'connected-react-router';
 
 import { configureStore } from './redux-base/configureStore';
 import { MainRoutes } from './routes/MainRoutes';
 
 export interface IAppRootComponent {
-  history: BrowserHistory,
+  history: History,
   store: ReturnType<typeof configureStore>
 }
 

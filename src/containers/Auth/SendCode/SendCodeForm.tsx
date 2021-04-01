@@ -1,12 +1,8 @@
+import { connect } from 'react-redux';
 import { Form, Input, Button } from 'antd';
 import firebase from "firebase/app";
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 24 },
-  },
-};
+import { loginSuccess, showError } from 'redux-base/actions';
 
 interface ISendCodeForm {
   loginSuccess: (user: firebase.User | null) => void;
@@ -15,7 +11,12 @@ interface ISendCodeForm {
   onCodeSent: (status: boolean) => void;
 }
 
-export const SendCodeForm = ({
+const mapDispatchToProps = { 
+  loginSuccess,
+  showError,
+};
+
+const SendCodeForm = ({
   loginSuccess,
   showError,
 
@@ -37,7 +38,10 @@ export const SendCodeForm = ({
 
   return (
     <Form
-      {...formItemLayout}
+      labelCol={{
+        xs: { span: 24 },
+        sm: { span: 24 },
+      }}
       form={code}
       name="code"
       labelAlign="left"
@@ -69,3 +73,5 @@ export const SendCodeForm = ({
     </Form>
   );
 };
+
+export default connect(null, mapDispatchToProps)(SendCodeForm);

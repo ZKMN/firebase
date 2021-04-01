@@ -1,5 +1,7 @@
 enum Links {
-  Login = "/",
+  Login = '/login',
+  SignUp = '/sign-up',
+  Home = '/home',
 }
 
 export default Links;

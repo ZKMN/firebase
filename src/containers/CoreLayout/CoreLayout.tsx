@@ -31,7 +31,7 @@ export const CoreLayout = ({ children, user, loginSuccess }: ICoreLayoutProps) =
 
   return(
     <Row justify='center' align="middle" className="core">
-      <Col xs={24}>
+      <Col xs={24} style={{ height: '100%' }}>
         {children}
       </Col>
     </Row>

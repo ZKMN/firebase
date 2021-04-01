@@ -23,7 +23,6 @@ const login = produce(
         break;
       case SHOW_ERROR:
         draft.isLoading = false;
-        draft.isLoggedIn = false;
         break;
       case RESET_REDUCER:
         return INITIAL_STATE;
